@@ -33,7 +33,33 @@
 
 				<h2>Tasks</h2></br>
 				<p><%= task %> </p>
+				<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Project number</th>
+        <th>Assigned</th>
+        <th>Task</th>
+				<th>Date</th>
+				<th>Completed</th>
+      </tr>
+    </thead>
+    <tbody>
 
+			<% for(var value of task){ %>
+      <tr>
+        <td><%= value.project %></td>
+        <td><%= value.assigned %></td>
+        <td><%= value.task %></td>
+				<td><%= value.date %></td>
+				<% if (value.completed==0) {%>
+					<td> False </td>
+					<% }else { %>
+						<td> True </td>
+						<% } %>
+      </tr>
+			<% } %>
+    </tbody>
+  </table>
 
 
 
