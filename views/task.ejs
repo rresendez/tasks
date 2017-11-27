@@ -2,6 +2,16 @@
 <!doctype html>
 <html>
 <head>
+	<style type="text/css">
+	.table{border:1px solid black;}
+.blue_bg{ background-color:#5ccbf0;  color:#0b5a75; }
+.bluer_bg{ background-color:#14a2d2; }
+.head{ background-color: #0d6c8c; webkit-print-color-adjust: exact; color:white; font-weight: bold;}
+.foot{ background-color: #0d6c8c; color:white; font-weight: bold;webkit-print-color-adjust: exact;}
+.footd{ background-color: #0f7ea3; color:white;  webkit-print-color-adjust: exact;}
+.new{position: fixed; bottom: 2;}
+.label{display:block;}
+</style>
 	<title>Node Authentication</title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
@@ -28,14 +38,15 @@
 
 		<strong>User Name </strong>: <%= user.username %><br>
 	</h2>
-	<form action="/tasks" method="post" class="form-group"  >
-		<div class="form-group" style="margin:100">
+
+
+
 
 				<h2>Tasks</h2></br>
-				<p><%= task %> </p>
-				<table class="table table-hover">
+
+				<table style="width:100%" class="table table-hover" id='t2'>
     <thead>
-      <tr>
+      <tr class="head">
         <th>Project number</th>
         <th>Assigned</th>
         <th>Task</th>
@@ -63,11 +74,19 @@
 
 
 
-			 </div>
+
 		 </br></br>
+		 <hr>
+		 <div class="form-group" >
+		 <form action="/tasks" method="post"  class="form-group">
+			 <input hidden type="text" name="pid" value="<%- value.project -%>">
+			 <input hidden type="text" name="assigned" value="<%- value.assigned -%>">
+			 <input type="text" class="form-control" placeholder="task"></input>
+			 <input type="checkbox" name="completed"  value="1"> Completed</input><br>
+
 			 		<button    type='submit' class="btn btn-success">Submit</button>
 		</form>
-
+	</div>
 
 
 	</div>
