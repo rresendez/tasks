@@ -1,0 +1,54 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Node Authentication</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		body 		{ padding-top:80px; word-wrap:break-word; }
+	</style>
+	<% include head %>
+</head>
+<body>
+<div class="container">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-building-o"></span> Select a Project</h1>
+
+
+	</div>
+		</div>
+		<p style="display:none">
+			<strong>id</strong>: <%= user.id %><br>
+			<strong>username</strong>: <%= user.username %><br>
+		</p>
+
+
+</br>
+<div class="container" id="land">
+	<form action="/tasks" method="post" class="form-group"  >
+		<div class="form-group" style="margin:100">
+
+				<h2>Projects</h2></br>
+				<select class="form-control" name="project">
+					<% for (var value of proj){ %>
+						<option><%= value.Proj_id %> <%= value.ProjOfficial %></option>
+						<% } %>
+
+				</select>
+
+
+
+
+			 </div>
+		 </br></br>
+			 		<button    type='submit' class="btn btn-success">Submit</button>
+		</form>
+
+
+
+	</div>
+
+</body>
+</html>

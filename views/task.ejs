@@ -1,0 +1,50 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Node Authentication</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		body 		{ padding-top:80px; word-wrap:break-word; }
+	</style>
+	<% include head %>
+</head>
+<body>
+<div class="container">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-building"></span>Project <%= project %></h1>
+
+
+	</div>
+		</div>
+
+
+
+</br>
+<div class="container" id="land">
+	<h2  align="center" style="text-align:left;color:#51b949" >
+
+		<strong>User Name </strong>: <%= user.username %><br>
+	</h2>
+	<form action="/tasks" method="post" class="form-group"  >
+		<div class="form-group" style="margin:100">
+
+				<h2>Tasks</h2></br>
+				<p><%= task %> </p>
+
+
+
+
+			 </div>
+		 </br></br>
+			 		<button    type='submit' class="btn btn-success">Submit</button>
+		</form>
+
+
+
+	</div>
+
+</body>
+</html>
