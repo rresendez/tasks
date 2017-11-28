@@ -36,7 +36,8 @@
 <div class="container" id="land">
 	<h2  align="center" style="text-align:left;color:#51b949" >
 
-		<strong>User Name </strong>: <%= user.username %><br>
+		<strong>User Name </strong>: <%= user.username %>  |
+		<strong> User ID </strong>: <%= user.uid %> <br>
 	</h2>
 
 
@@ -78,13 +79,15 @@
 		 </br></br>
 		 <hr>
 		 <div class="form-group" >
-		 <form action="/tasks" method="post"  class="form-group">
-			 <input hidden type="text" name="pid" value="<%- value.project -%>">
-			 <input hidden type="text" name="assigned" value="<%- value.assigned -%>">
-			 <input type="text" class="form-control" placeholder="task"></input>
-			 <input type="checkbox" name="completed"  value="1"> Completed</input><br>
+		 <form action="/create" method="post"  class="form-group">
+			 <input hidden type="text" name="pname" value="<%=  %>">
+			 <input hidden type="text" name="pname" value="<%= project %>">
+			 <input hidden type="text" name="pid" value="<%= value.project %>">
+			 <input hidden type="text" name="assigned" value="<%= value.assigned %>">
+			 <textarea class="form-control" placeholder="task" name="task"></textarea>
+			 <input type="checkbox" name="completed"  value="1"> Completed</input></br>
 
-			 		<button    type='submit' class="btn btn-success">Submit</button>
+			 		<button style="float:right"    type='submit' class="btn btn-success">Submit</button>
 		</form>
 	</div>
 

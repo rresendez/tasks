@@ -31,12 +31,35 @@ module.exports = function(app, passport) {
 			}
 			else{
 				console.log(result);
+				console.log("Req.user "+ JSON.stringify(req.user));
 				res.render("task.ejs",{task: result, user : req.user,project:pname});
 			}
 		})
 
 		 // load the index.ejs file
 	});
+// Create new entry
+	app.post('/create',isLoggedIn,function(req,res){
+		console.log(req.body);
+		console.log(req.body.completed);
+		if(typeof req.body.completed == 'undefined'){
+			req.body.completed=0;
+		}
+
+		res.send("This is the hook ");
+
+	/*	getTasks(con,pid, function(err,result){
+			if(err){
+				console.log(err);
+			}
+			else{
+				console.log(result);
+				res.render("task.ejs",{task: result, user : req.user,project:pname});
+			}
+		}
+		*/
+
+	})
 
 
 	// =====================================
@@ -150,4 +173,9 @@ function getTasks(con,pid,callback){
 
 		}
 	})
+}
+
+function insert(con,req,callback){
+
+	con.query('Insert into hcdd1task (project,assigned,task,uid,completed)values(?,?,?,?,?)',[req.body.pid,req.body.assigned,req.body.task,])
 }
