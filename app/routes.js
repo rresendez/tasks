@@ -3,8 +3,8 @@ module.exports = function(app, passport) {
 
 	var mysql = require('mysql');
 	var dbconfig = require('../config/database');
-	var con = mysql.createPool(dbconfig.connection);
-	con.query('USE time');
+	var con = mysql.createConnection(dbconfig.connection);
+	con.query('USE ' + dbconfig.database);
 
 
 	// =====================================
@@ -30,9 +30,11 @@ module.exports = function(app, passport) {
 				console.log(err);
 			}
 			else{
-				console.log(result);
-				console.log("Req.user "+ JSON.stringify(req.user));
-				res.render("task.ejs",{task: result, user : req.user,project:pname});
+				getUsers(con,function(err,resul){
+					console.log(result);
+					console.log("Req.user "+ JSON.stringify(req.user));
+					res.render("task.ejs",{task: result, user : req.user, project:pname, users:resul});
+				})
 			}
 		})
 
@@ -40,24 +42,43 @@ module.exports = function(app, passport) {
 	});
 // Create new entry
 	app.post('/create',isLoggedIn,function(req,res){
+
 		console.log(req.body);
 		console.log(req.body.completed);
 		if(typeof req.body.completed == 'undefined'){
 			req.body.completed=0;
 		}
 
-		res.send("This is the hook ");
-
-	/*	getTasks(con,pid, function(err,result){
+		var reqg =req.body;
+		console.log(reqg);
+			var pid = req.body.pid;
+				getTasks(con,pid, function(err,result){
 			if(err){
 				console.log(err);
 			}
 			else{
 				console.log(result);
-				res.render("task.ejs",{task: result, user : req.user,project:pname});
+				console.log("Req "+ JSON.stringify(reqg));
+
+				insert(con,reqg,function(err,resul){
+					if(err){
+						console.log(err);
+					}else{
+
+						getUsers(con,function(err,resu){
+							if(err) {
+								console.log(err);
+							}else{
+								console.log(resu);
+								res.render("task.ejs",{task: result, user : req.user,project:reqg.pname, users:resu });
+							}
+						})
+					}
+				})
+
 			}
-		}
-		*/
+		})
+
 
 	})
 
@@ -165,6 +186,7 @@ function getProjects(con,callback){
 // Function get TASKS
 
 function getTasks(con,pid,callback){
+
 	con.query('Select * from hcdd1task where project =?',[pid],function(err,res){
 		if(err){
 			callback(err,null);
@@ -175,7 +197,30 @@ function getTasks(con,pid,callback){
 	})
 }
 
-function insert(con,req,callback){
+//Function get users
 
-	con.query('Insert into hcdd1task (project,assigned,task,uid,completed)values(?,?,?,?,?)',[req.body.pid,req.body.assigned,req.body.task,])
+function getUsers(con,callback){
+	con.query('Select * from hcdd1user ',function(err,res){
+		if(err){
+			callback(err,null);
+		}else{
+			callback(null,res);
+		}
+	})
+}
+
+// Function Insert
+
+function insert(con,body,callback){
+var query = 'Insert into hcdd1task (project,assigned,task,uid,completed,assignee,date)values(?,?,?,?,?,?,curdate())'
+
+
+	con.query(query,[body.pid,body.assigned,body.task,body.uid,body.completed,body.users],function(err,res){
+		if(err){
+			callback(err,null)
+		}else{
+			callback(null,res);
+		}
+	}
+)
 }

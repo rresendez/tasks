@@ -52,6 +52,7 @@
         <th>Assigned</th>
         <th>Task</th>
 				<th>Date</th>
+				<th>Assignee</th>
 				<th>Completed</th>
       </tr>
     </thead>
@@ -63,6 +64,7 @@
         <td><%= value.assigned %></td>
         <td><%= value.task %></td>
 				<td><%= value.date %></td>
+				<td><%= value.assignee %> </td>
 				<% if (value.completed==0) {%>
 					<td> False </td>
 					<% }else { %>
@@ -80,12 +82,21 @@
 		 <hr>
 		 <div class="form-group" >
 		 <form action="/create" method="post"  class="form-group">
-			 <input hidden type="text" name="pname" value="<%=  %>">
+			 <input hidden type="text" name="uid" value="<%= user.uid  %>">
 			 <input hidden type="text" name="pname" value="<%= project %>">
 			 <input hidden type="text" name="pid" value="<%= value.project %>">
 			 <input hidden type="text" name="assigned" value="<%= value.assigned %>">
 			 <textarea class="form-control" placeholder="task" name="task"></textarea>
-			 <input type="checkbox" name="completed"  value="1"> Completed</input></br>
+
+			 <select  class="form-control" name="users">
+				 <option value="%" selected> Choose an assignee </option>
+			 <% for(var user of users) { %>
+				 <option value="<%= user.User_ID %>"> <%= user.FirstName %> <%= user.LastName %> </option>
+				 <% } %>
+
+		  </select>
+		</br>
+			<input style="margin:20px" type="checkbox" name="completed"  value="1"> Completed</input></br>
 
 			 		<button style="float:right"    type='submit' class="btn btn-success">Submit</button>
 		</form>
