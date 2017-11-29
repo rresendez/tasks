@@ -5,7 +5,7 @@
 	<style type="text/css">
 	.table{border:1px solid black;}
 .blue_bg{ background-color:#5ccbf0;  color:#0b5a75; }
-.bluer_bg{ background-color:#14a2d2; }
+.bluer_bg{ background-color:#14a2d2;  font-weight: bold;  font-size:15px; }
 .head{ background-color: #0d6c8c; webkit-print-color-adjust: exact; color:white; font-weight: bold;}
 .foot{ background-color: #0d6c8c; color:white; font-weight: bold;webkit-print-color-adjust: exact;}
 .footd{ background-color: #0f7ea3; color:white;  webkit-print-color-adjust: exact;}
@@ -24,7 +24,7 @@
 <div class="container">
 
 	<div class="page-header text-center">
-		<h1><span class="fa fa-building"></span>Project <%= project %></h1>
+		<h1><span class="fa fa-building"></span>All Projects</h1>
 		<form action="/land">
 			<button  style="float:right;margin:20px" type='submit' class="btn btn-success">Go Back</button>
 		</form>
@@ -51,7 +51,7 @@
 				<table style="width:100%" class="table table-hover" id='t2'>
     <thead>
       <tr class="head">
-        <th>Project number</th>
+
         <th>Assigned</th>
         <th>Task</th>
 				<th>Date</th>
@@ -60,21 +60,53 @@
       </tr>
     </thead>
     <tbody>
+			<%for(var value of all){ %>
+				<tr class="bluer_bg" align="center">
+					<td colspan="5">
+						<%= value.ProjOfficial %>
+					</td>
+				</tr>
+				<thead>
+		      <tr class="head">
 
-			<% for(var value of task){ %>
-      <tr>
-        <td><%= value.project %></td>
-        <td><%= value.assigned %></td>
-        <td><%= value.task %></td>
-				<td><%= value.date %></td>
-				<td><%= value.assignee %> </td>
-				<% if (value.completed==0) {%>
-					<td> False </td>
-					<% }else { %>
-						<td> True </td>
-						<% } %>
-      </tr>
-			<% } %>
+		        <th>Assigned</th>
+		        <th>Task</th>
+						<th>Date</th>
+						<th>Assignee</th>
+						<th>Completed</th>
+		      </tr>
+		    </thead>
+				<%for (var data of task ){
+					if(data.project==value.Proj_id){
+						var date=JSON.stringify(data.date);
+						date=date.slice(1,11);
+						if(data.completed==1){
+							data.completed="True";
+						}else{
+							data.completed="False";
+						}
+					%>
+					<tr>
+						<td>
+						<%= data.assigned %>
+						</td>
+						<td>
+						<%= data.task %>
+						</td>
+						<td>
+						<%= date %>
+						</td>
+						<td>
+						<%= data.assignee %>
+						</td>
+						<td>
+						<%= data.completed %>
+						</td>
+					</tr>
+					<%} } %>
+				<% } %>
+
+
     </tbody>
   </table>
 
@@ -82,31 +114,9 @@
 
 
 		 </br></br>
-		 <% if(typeof(value)!="undefined"){ %>
 		 <hr>
-		 <h2> Create new task </h2></br>
-		 <div class="form-group" >
-		 <form action="/create" method="post"  class="form-group">
-			 <input hidden type="text" name="uid" value="<%= user.uid  %>">
-			 <input hidden type="text" name="pname" value="<%= project %>">
-			 <input hidden type="text" name="pid" value="<%= value.project %>">
-			 <input hidden type="text" name="assigned" value="<%= user.username %>">
-			 <textarea class="form-control" placeholder="task" name="task"></textarea>
 
-			 <select  class="form-control" name="users">
-				 <option value="%" selected> Choose an assignee </option>
-			 <% for(var user of users) { %>
-				 <option value="<%= user.User_ID %>"> <%= user.FirstName %> <%= user.LastName %> </option>
-				 <% } %>
-
-		  </select>
-		</br>
-			<input style="margin:20px" type="checkbox" name="completed"  value="1"> Completed</input></br>
-
-			 		<button style="float:right"    type='submit' class="btn btn-success">Submit</button>
-		</form>
 	</div>
-	<% } %>
 
 
 	</div>

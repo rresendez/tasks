@@ -15,6 +15,31 @@ module.exports = function(app, passport) {
 
 		res.render('index.ejs'); // load the index.ejs file
 	});
+
+	// =====================================
+	// ALL PROJECTS ========
+	// =====================================
+	app.get('/all',isLoggedIn,function(req,res){
+		getAll(con,function(err,result){
+			if(err){
+				console.log(err);
+			}else{
+				getAllTasks(con,function(err,resul){
+					if(err){
+						console.log(err);
+					}else{
+						console.log(resul)
+						res.render("all.ejs",{user:req.user,all:result,task:resul});
+					}
+				})
+
+			}
+		})
+
+
+	})
+
+
 	// =====================================
 	// TASKS  ========
 	// =====================================
@@ -196,11 +221,35 @@ function getTasks(con,pid,callback){
 		}
 	})
 }
+// Function get allTASKS
+
+function getAllTasks(con,callback){
+
+	con.query('Select * from hcdd1task ',function(err,res){
+		if(err){
+			callback(err,null);
+		}else{
+			callback(null,res);
+
+		}
+	})
+}
 
 //Function get users
 
 function getUsers(con,callback){
 	con.query('Select * from hcdd1user ',function(err,res){
+		if(err){
+			callback(err,null);
+		}else{
+			callback(null,res);
+		}
+	})
+}
+
+// Function all projects
+function getAll(con,callback){
+	con.query('Select * FROM hcdd1prj ORDER BY ProjOfficial',function(err,res){
 		if(err){
 			callback(err,null);
 		}else{
