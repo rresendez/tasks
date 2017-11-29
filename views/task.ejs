@@ -61,12 +61,15 @@
     </thead>
     <tbody>
 
-			<% for(var value of task){ %>
+			<% for(var value of task){
+				var date=JSON.stringify(value.date);
+				date=date.slice(1,11);
+				 %>
       <tr>
         <td><%= value.project %></td>
         <td><%= value.assigned %></td>
         <td><%= value.task %></td>
-				<td><%= value.date %></td>
+				<td><%= date %></td>
 				<td><%= value.assignee %> </td>
 				<% if (value.completed==0) {%>
 					<td> False </td>
@@ -82,13 +85,19 @@
 
 
 		 </br></br>
-		 <% if(typeof(value)!="undefined"){ %>
+	 <% if(true){
+
+		  %>
 		 <hr>
 		 <h2> Create new task </h2></br>
 		 <div class="form-group" >
 		 <form action="/create" method="post"  class="form-group">
 			 <input hidden type="text" name="uid" value="<%= user.uid  %>">
 			 <input hidden type="text" name="pname" value="<%= project %>">
+			<% if(typeof value == "undefined"){
+				 var value={};
+				 value.project=projID;
+			 } %>
 			 <input hidden type="text" name="pid" value="<%= value.project %>">
 			 <input hidden type="text" name="assigned" value="<%= user.username %>">
 			 <textarea class="form-control" placeholder="task" name="task"></textarea>

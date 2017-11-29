@@ -48,17 +48,20 @@ module.exports = function(app, passport) {
 		var project= req.body.project;
 		project=project.split(" ");
 		var pid=project[0];
-		var pname=project[1];
+		var pname=project.slice(1,project.length);
+		pname=pname.toString();
+		pname=pname.split(',').join(' ');
 		console.log("Project id :"+pid)
 		getTasks(con,pid, function(err,result){
 			if(err){
 				console.log(err);
 			}
 			else{
+
 				getUsers(con,function(err,resul){
 					console.log(result);
 					console.log("Req.user "+ JSON.stringify(req.user));
-					res.render("task.ejs",{task: result, user : req.user, project:pname, users:resul});
+					res.render("task.ejs",{task: result, user : req.user, project:pname, users:resul,projID:pid });
 				})
 			}
 		})
@@ -77,6 +80,7 @@ module.exports = function(app, passport) {
 		var reqg =req.body;
 		console.log(reqg);
 			var pid = req.body.pid;
+			console.log("this is the project Id "+ pid);
 				getTasks(con,pid, function(err,result){
 			if(err){
 				console.log(err);
@@ -95,7 +99,7 @@ module.exports = function(app, passport) {
 								console.log(err);
 							}else{
 								console.log(resu);
-								res.render("task.ejs",{task: result, user : req.user,project:reqg.pname, users:resu });
+								res.render("task.ejs",{task: result, user : req.user,project:reqg.pname, users:resu, projID:pid });
 							}
 						})
 					}
