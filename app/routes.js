@@ -150,7 +150,8 @@ module.exports = function(app, passport) {
 
 	// process the signup form
 	app.post('/signup', passport.authenticate('local-signup', {
-		successRedirect : '/profile', // redirect to the secure profile section
+
+		successRedirect : '/land', // redirect to the secure profile section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
@@ -167,7 +168,7 @@ module.exports = function(app, passport) {
 				console.log(err);
 			}
 			else{
-				console.log(result);
+				
 				res.render('land.ejs', {
 					 // get the user out of session and pass to template
 					 proj : result,
